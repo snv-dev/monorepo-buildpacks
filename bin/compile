@@ -17,7 +17,7 @@ if [ -f $ENV_DIR/PROJECT_DIR ]; then
 	# Check if application folder exists
 	if [ -d $BUILD_DIR/$PROJECT_DIR ]; then
 		# Declare which files to copy from app to root folder in order to prepare the app for proper installation
-		declare -a files=("package.json" "package-lock.json")
+		declare -a files=("package.json" "package-lock.json" "composer.json" "composer.lock")
 
 		for file in "${files[@]}"
 		do
