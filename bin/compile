@@ -12,33 +12,34 @@ ENV_DIR=${3:-}
 if [ -f $ENV_DIR/PROJECT_DIR ]; then
 	PROJECT_DIR=`cat $ENV_DIR/PROJECT_DIR`
 
-	echo "-----> Prepare $PROJECT_DIR for setup"
-
 	# Check if application folder exists
 	if [ -d $BUILD_DIR/$PROJECT_DIR ]; then
-		# Declare which files to copy from app to root folder in order to prepare the app for proper installation
-		declare -a files=("package.json" "package-lock.json" "composer.json" "composer.lock")
+		# If Node app exists - install node modules and generate app build
+		if [ -e "${BUILD_DIR}/${PROJECT_DIR}/package.json" ]; then
+			echo "-----> Setting up NodeJS application"
+			echo "       Generating app build!"
+			cd $BUILD_DIR/$PROJECT_DIR && npm install && npm run heroku-build
+		fi
 
-		for file in "${files[@]}"
-		do
-			APPFILE="${BUILD_DIR}/${PROJECT_DIR}/${file}"
-			ROOTFILE="${BUILD_DIR}/${file}"
+		#If PHP app exists - install packages
+		if [ -e "${BUILD_DIR}/composer.json" ]; then
+			echo "-----> Setting up PHP application"
+			# rm -rf "${BUILD_DIR}/vendor"
+			cd $BUILD_DIR && composer install --ignore-platform-reqs
+			echo "       Done!"
+		fi
 
-			if [ -e $APPFILE ]; then
-				echo "       Copy $APPFILE to $ROOTFILE"
+		echo "-----> Setting up $PROJECT_DIR"
 
-				if [ -e $ROOTFILE ]; then
-					rm -rf $ROOTFILE
-				fi
+		echo "       Copy project folder!"
+		cp -R $BUILD_DIR/$PROJECT_DIR/. $BUILD_DIR/
 
-				cp -R $APPFILE $ROOTFILE
-			fi
-		done
+		echo "       Remove rest of the apps!"
+		rm -rf "${BUILD_DIR}/packages"
 
-		echo "       Done!"
 		exit 0
 	fi
 fi
 
-echo "       Please, specify PROJECT_DIR in order to continue! Aborting!"
+echo "Please, specify PROJECT_DIR in order to continue! Aborting!"
 exit 1
