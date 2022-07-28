@@ -18,7 +18,7 @@ if [ -f $ENV_DIR/PROJECT_DIR ]; then
 		if [ -e "${BUILD_DIR}/${PROJECT_DIR}/package.json" ]; then
 			echo "-----> Setting up NodeJS application"
 			echo "       Generating app build!"
-			cd $BUILD_DIR/$PROJECT_DIR && npm install && npm run heroku-build
+			cd $BUILD_DIR/$PROJECT_DIR && npm install --legacy-peer-deps && npm run heroku-build
 		fi
 
 		#If PHP app exists - install packages
