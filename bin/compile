@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+# bin/compile <build-dir> <cache-dir> <env-dir>
+
+# Ensure wildcards in globs match dotfiles too.
+shopt -s dotglob
+
+BUILD_DIR=${1:-}
+CACHE_DIR=${2:-}
+ENV_DIR=${3:-}
+
+# Check if we have PROJECT_DIR variable set, otherwise we cannot continue
+if [ -f $ENV_DIR/PROJECT_DIR ]; then
+	PROJECT_DIR=`cat $ENV_DIR/PROJECT_DIR`
+
+	# Check if application folder exists
+	if [ -d $BUILD_DIR/$PROJECT_DIR ]; then
+		# if [ -d "${BUILD_DIR}/${PROJECT_DIR}/node_modules" ]; then
+		# 	rm -rf "${BUILD_DIR}/${PROJECT_DIR}/node_modules"
+		# fi
+
+		# if [ -d "${BUILD_DIR}/${PROJECT_DIR}/vendor" ]; then
+		# 	rm -rf "${BUILD_DIR}/${PROJECT_DIR}/vendor"
+		# fi
+
+		echo "-----> Setting up $PROJECT_DIR"
+
+		echo "       Copy project folder!"
+		cp -R $BUILD_DIR/$PROJECT_DIR/. $BUILD_DIR/
+
+		echo "       Remove rest of the apps!"
+		rm -rf "${BUILD_DIR}/packages"
+
+		exit 0
+	fi
+fi
+
+echo "Please, specify PROJECT_DIR in order to continue! Aborting!"
+exit 1
