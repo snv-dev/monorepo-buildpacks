@@ -14,14 +14,6 @@ if [ -f $ENV_DIR/PROJECT_DIR ]; then
 
 	# Check if application folder exists
 	if [ -d $BUILD_DIR/$PROJECT_DIR ]; then
-		# if [ -d "${BUILD_DIR}/${PROJECT_DIR}/node_modules" ]; then
-		# 	rm -rf "${BUILD_DIR}/${PROJECT_DIR}/node_modules"
-		# fi
-
-		# if [ -d "${BUILD_DIR}/${PROJECT_DIR}/vendor" ]; then
-		# 	rm -rf "${BUILD_DIR}/${PROJECT_DIR}/vendor"
-		# fi
-
 		echo "-----> Setting up $PROJECT_DIR"
 
 		echo "       Copy project folder!"
