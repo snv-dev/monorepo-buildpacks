@@ -24,6 +24,10 @@ if [ -f $ENV_DIR/PROJECT_DIR ]; then
 
 		exit 0
 	fi
+
+	echo "It seems that you are deploying from an action. It's alright."
+	exit 0
+
 fi
 
 echo "Please, specify PROJECT_DIR in order to continue! Aborting!"
