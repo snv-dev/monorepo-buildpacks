@@ -16,6 +16,12 @@ if [ -f $ENV_DIR/PROJECT_DIR ]; then
 	if [ -d $BUILD_DIR/$PROJECT_DIR ]; then
 		echo "-----> Setting up $PROJECT_DIR"
 
+		echo "       Remove package.json!"
+		rm "${BUILD_DIR}/package.json"
+
+		echo "       Remove package-lock.json!"
+		rm "${BUILD_DIR}/package-lock.json"
+
 		echo "       Copy project folder!"
 		cp -R $BUILD_DIR/$PROJECT_DIR/. $BUILD_DIR/
 
