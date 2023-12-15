@@ -25,6 +25,12 @@ if [ -f $ENV_DIR/PROJECT_DIR ]; then
 		echo "       Remove yarn.lock!"
 		rm "${BUILD_DIR}/yarn.lock"
 
+		echo "       Remove .yarnrc.yml!"
+		rm "${BUILD_DIR}/.yarnrc.yml"
+
+		echo "       Remove .yarn folder!"
+		rm -rf "${BUILD_DIR}/.yarn"
+
 		echo "       Copy project folder!"
 		cp -R $BUILD_DIR/$PROJECT_DIR/. $BUILD_DIR/
 
